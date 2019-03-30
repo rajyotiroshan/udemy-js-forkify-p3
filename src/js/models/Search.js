@@ -11,8 +11,7 @@ export default class Search {
     const baseURL = "https://www.food2fork.com/api/search";
     try {
       const res = await axios(`${baseURL}?key=${KEY}&q=${this.query}`);
-      this.result = res.data.recipes;
-     // console.log(this.result);
+      this.results = res.data.recipes;
     } catch (error) {
       alert(error);
     }
