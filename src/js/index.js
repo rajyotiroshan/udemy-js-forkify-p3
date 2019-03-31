@@ -5,7 +5,7 @@
 console.log(`${string} ${searchView.add(searchView.ID,2)} ${searchView.ID}*2 = ${searchView.multiply(searchView.ID,2)}`); */
 
 import Search from './models/Search';
-import { elements } from './views/base';
+import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 
 /**
@@ -35,9 +35,11 @@ const controlSearch = async ()=> {
         //3. Prepare UI for results
         searchView.clearInput();
         searchView.clearResults();
+        renderLoader(elements.searchRes);
         //4. search for recipes.
         await state.search.getResults();
         //5. Render results on UI.
+        clearLoader();
         //console.log(state.search.results);
         searchView.renderResults(state.search.results);
         //
