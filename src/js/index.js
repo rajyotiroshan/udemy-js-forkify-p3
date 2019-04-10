@@ -5,6 +5,7 @@
 console.log(`${string} ${searchView.add(searchView.ID,2)} ${searchView.ID}*2 = ${searchView.multiply(searchView.ID,2)}`); */
 
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
 
@@ -23,6 +24,10 @@ const state = {
      * }
      */
 };
+
+/**
+ * Search Controller.
+ */
 
 const controlSearch = async ()=> {
     //1. get query from the view
@@ -55,3 +60,10 @@ elements.searchForm.addEventListener('submit', e=>{
     controlSearch();
 });
 
+/**
+ * Recipe Controller
+ */
+
+ const r = new Recipe(46956);
+ r.getRecipe();
+ console.log(r);
