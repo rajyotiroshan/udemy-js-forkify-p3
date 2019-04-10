@@ -11,9 +11,9 @@ export default class Recipe {
             const res = await axios(`${baseURL}?key=${KEY}&rId = ${this.id}`);
             this.title = res.data.recipe.title;
             this.author = res.data.recipe.publisher;
-            this.author = res.data.recipe.image_url;
-            this.author = res.data.recipe.source-url;
-            this.author = res.data.recipe.ingredients;
+            this.img = res.data.recipe.image_url;
+            this.url = res.data.recipe.source-url;
+            this.ingredients = res.data.recipe.ingredients;
         }catch(error) {
             alert('Something went Wrong');
             
