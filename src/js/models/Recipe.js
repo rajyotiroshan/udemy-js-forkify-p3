@@ -8,14 +8,16 @@ export default class Recipe {
 
     async getRecipe() {
         try {
+
             const res = await axios(`${baseURL}?key=${KEY}&rId = ${this.id}`);
-            this.title = res.data.recipe.title;
-            this.author = res.data.recipe.publisher;
-            this.img = res.data.recipe.image_url;
-            this.url = res.data.recipe.source-url;
-            this.ingredients = res.data.recipe.ingredients;
+            console.log(res);
+            this.title = res.data.recipes.title;
+            this.author = res.data.recipes.publisher;
+            this.img = res.data.recipes.image_url;
+            this.url = res.data.recipes.source-url;
+            this.ingredients = res.data.recipes.ingredients;
         }catch(error) {
-            alert('Something went Wrong');
+            alert(' went Wrong');
             
         }
     }
