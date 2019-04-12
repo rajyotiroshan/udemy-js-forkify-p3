@@ -8,6 +8,7 @@ import Search from './models/Search';
 import Recipe from './models/Recipe';
 import { elements, renderLoader, clearLoader } from './views/base';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView'
 
 /**
  * Global state of the app.
@@ -41,14 +42,17 @@ const controlSearch = async ()=> {
         searchView.clearInput();
         searchView.clearResults();
         renderLoader(elements.searchRes);
-        //4. search for recipes.
-        await state.search.getResults();
-        //5. Render results on UI.
-        clearLoader();
-        //console.log(state.search.results);
-        searchView.renderResults(state.search.results);
-        //
-        
+
+        try {
+            //4. search for recipes.
+            await state.search.getResults();
+            //5. Render results on UI.
+            clearLoader();
+            //console.log(state.search.results);
+            searchView.renderResults(state.search.results);
+        }catch(err){
+            alert('Something wrong with the search.');
+        }
     }
 }
 
@@ -72,4 +76,40 @@ elements.searchResPages.addEventListener('click', e=>{
 /**
  * Recipe Controller
  */
+
+const controlRecipe = async () => {
+    //Get the id from the url.
+    const id = window.location.hash.replace('#', '');
+    console.log(id);
+
+    if(id) {// Prepare the UI for changes.
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe)
+        //Create the new Recipe object.
+        state.recipe = new Recipe(id);
+
+        try{
+            //Get the Recipe data.
+            await state.recipe.getRecipe();
+            console.log(state.recipe.ingredients);
+            state.recipe.parseIngredients();
+            //Calculate serving and time.
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+            //Render  Recipe.
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
+        }catch(err){
+            alert('Error processing recipe');
+        }
+
+
+
+    }
+};
+
+ //listener for has number change.
+/*  window.addEventListener('hashchange', controlRecipe);
+ window.addEventListener('load', controlRecipe); */
+ ['hashchange','load'].forEach(event=> window.addEventListener(event, controlRecipe));
 
