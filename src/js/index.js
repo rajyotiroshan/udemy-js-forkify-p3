@@ -20,8 +20,12 @@ import * as recipeView from './views/recipeView'
 const state = {
     /**
      * search: {
-     *      query,
-     *      results
+     *      query:"search value",
+     *      results: fetchedResult.data.recipes
+     * }
+     *      
+     *          
+     *  
      * }
      */
 };
@@ -85,6 +89,11 @@ const controlRecipe = async () => {
     if(id) {// Prepare the UI for changes.
         recipeView.clearRecipe();
         renderLoader(elements.recipe)
+        // Highlight selected search list item.
+        if(state.search){
+           searchView.highlightSelected(id); 
+        }
+        
         //Create the new Recipe object.
         state.recipe = new Recipe(id);
 
