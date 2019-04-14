@@ -7,23 +7,34 @@ export const multiply = (a,b) => a*b;
 export const ID = 24; */
 import { elements } from "./base";
 
+/**
+ * @returns user search input from search field.
+ */
 export const getInput = () => {
   return elements.searchInput.value;
 };
 
+/**
+ * remove input value from serch field.
+ */
 export const clearInput = () => {
   elements.searchInput.value = "";
 };
 
+/**
+ * remove all search results
+ */
 export const clearResults = () => {
   elements.searchResultList.innerHTML = "";
   elements.searchResPages.innerHTML = "";
 };
 
+export const highlightSelected = id=>{
+
+}
+
 /**
- * 'Rajan kumar jha'
- *
- *
+ * trim recipe title
  */
 const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];
@@ -40,6 +51,10 @@ const limitRecipeTitle = (title, limit = 17) => {
   return title;
 };
 
+/**
+ * @param {fecthed recipe} recipe 
+ * @return markup for recipe list item.
+ */
 const renderRecipe = recipe => {
   const markup = `
     <li>
@@ -56,9 +71,13 @@ const renderRecipe = recipe => {
   elements.searchResultList.insertAdjacentHTML("beforeend", markup);
 };
 
-//type: 'prev' or 'next'
-const createButton = (page, type) => `
-    <button class="btn-inline results__btn--${type}" data-goto=${type==='prev'?page-1: page+1}>
+/**
+ * 
+ * @param {page no to goto} page 
+ * @param {prev or next} type 
+ * @return markup for next or prev button
+ */
+const createButton = (page, type) => `<button class="btn-inline results__btn--${type}" data-goto=${type==='prev'?page-1: page+1}>
         <span>${type==='prev'?page-1: page+1}</span>
         <svg class="search__icon">
             <use href="img/icons.svg#icon-triangle-${type==='prev'?'left':'right'}"></use>
@@ -67,6 +86,13 @@ const createButton = (page, type) => `
     </button>
 `;
 
+/**
+ * 
+ * @param {page no to goto} page 
+ * @param {total no of results fetched} numResults 
+ * @param {total no of results per page to display} resPerPage 
+ * @return {render pre or next button on the page.}
+ */
 const renderButtons = (page, numResults, resPerPage) => {
   const pages = Math.ceil(numResults / resPerPage);
     let button;
@@ -87,6 +113,12 @@ const renderButtons = (page, numResults, resPerPage) => {
   elements.searchResPages.insertAdjacentHTML('afterbegin',button);
 };
 
+/**
+ * 
+ * @param {fetched recipe} recipes 
+ * @param {page no} page 
+ * @param {no of recipe per page } resPerPage 
+ */
 export const renderResults = (recipes = [], page = 1, resPerPage = 10) => {
   //render results of current page.
     const start = (page - 1) * resPerPage;
