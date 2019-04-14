@@ -5,7 +5,9 @@ export default class Recipe {
     constructor(id) {
         this.id = id;
     }
-
+    /** 
+     * fetch recipe f
+    */
     async getRecipe() {
         try {
 
@@ -26,10 +28,10 @@ export default class Recipe {
         //Assigning that we nedd minimum 15 min for each ingredients.
         const numIng = this.ingredients.length;
         const periods = Math.ceil(numIng/3);
-        this.time = periods * 15;
+        this.time = periods * 15;//save as a property to recipe object.
     }
     calcServings() {
-        this.servings = 4;
+        this.servings = 4;//save as aproperty to recipe object.
     }
 
     parseIngredients() {
